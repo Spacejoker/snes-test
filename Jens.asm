@@ -11,23 +11,26 @@
  .bank 0
  .section "MainCode"
  
+; Start label is required by header
  Start:
-     ; Initialize the SNES.
      Snes_Init
  
      ; Set the background color to green.
      sep     #$20        ; Set the A register to 8-bit.
      lda     #%10000000  ; Force VBlank by turning off the screen.
+     ; $2100 Screen Display Register, eight bit forces VBlank.
      sta     $2100
-     lda     #%11100000  ; Load the low byte of the green color.
+     ; Color format is 0BBBBBGG|GGGRRRRR, one byte at a time (low first)
+     lda     #$15  ; Load the low byte of the color.
+     ; $2122 is the Color Data Register.
      sta     $2122
-     lda     #%00000000  ; Load the high byte of the green color.
+     lda     #$00  ; Load the high byte of the color.
      sta     $2122
-     lda     #%00001111  ; End VBlank, setting brightness to 15 (100%).
+     ; Same register as before, but set brightness to 15 (100%).
+     lda     #%00001111
      sta     $2100
  
-     ; Loop forever.
- Forever:
-     jmp Forever
+ Loop:
+     jmp Loop
  
  .ends

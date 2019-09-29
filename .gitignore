@@ -1,5 +1,6 @@
 *.o
 *.obj
 *.smc
+*.swp
 wla-65816
 wlalink
