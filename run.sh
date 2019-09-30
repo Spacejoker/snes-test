@@ -1,3 +1,2 @@
 #!/bin/bash
-./build.sh
-zsnes Jens.smc
+make && zsnes Game.sfc
