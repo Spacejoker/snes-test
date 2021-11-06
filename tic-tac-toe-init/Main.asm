@@ -1,6 +1,7 @@
 ;Testing stuff based on this tutorial: https://wiki.superfamicom.org/making-a-small-game-tic-tac-toe
 .include "header.inc"
 .include "InitSNES.asm"
+.include "Checker.asm"
 
 .bank 0 slot 0
 .org 0
@@ -55,21 +56,7 @@ ldx #$4000	    ; write to vram
 stx $2116       ; from $4000
 ; End palette magic
 
-; My nice checker pattern of + signs.
-.rept 8
-  .rept 16
-    ldx #$0006
-    stx $2118
-    ldx #$0000
-    stx $2118
-  .endr
-  .rept 16
-    ldx #$0000
-    stx $2118
-    ldx #$0006
-    stx $2118
-  .endr
-.endr
+DrawCheckerPattern $0005
 
 ;set up the screen & modes
 lda #%00110000  ; 16x16 tiles, mode 0
